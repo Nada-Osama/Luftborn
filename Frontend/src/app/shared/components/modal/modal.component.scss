@@ -1,0 +1,58 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-xl) var(--space-md);
+  overflow-y: auto;
+  z-index: 200;
+}
+
+.modal-panel {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  width: 100%;
+  max-width: 560px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md) var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+
+    h2 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+  }
+
+  &__close {
+    background: transparent;
+    border: none;
+    font-size: 1.4rem;
+    line-height: 1;
+    color: var(--color-text-muted);
+    padding: 0;
+
+    &:hover {
+      color: var(--color-text);
+    }
+  }
+
+  &__body {
+    padding: var(--space-lg);
+
+    // The forms projected in already have their own .form styling with a
+    // max-width meant for a full page - inside the modal panel that's
+    // redundant, so let it fill the panel instead.
+    ::ng-deep .form {
+      max-width: none;
+      box-shadow: none;
+      padding: 0;
+    }
+  }
+}

@@ -1,0 +1,8 @@
+@if (errorMessage) {
+  <div class="callback">
+    <p class="alert alert--error">{{ errorMessage }}</p>
+    <button type="button" class="btn btn--primary" (click)="retry()">Try signing in again</button>
+  </div>
+} @else {
+  <p class="loading-text">Signing you in…</p>
+}

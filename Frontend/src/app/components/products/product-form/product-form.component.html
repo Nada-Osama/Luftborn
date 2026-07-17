@@ -1,0 +1,63 @@
+@if (isLoading) {
+  <p class="loading-text">Loading…</p>
+} @else {
+  <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-field">
+      <label for="name">Name</label>
+      <input id="name" type="text" formControlName="name" />
+      @if (form.controls.name.invalid && form.controls.name.touched) {
+        <span class="field-error">Name is required (max 150 characters).</span>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="categoryId">Category</label>
+      <select id="categoryId" formControlName="categoryId">
+        <option [ngValue]="0" disabled>Select a category…</option>
+        @for (category of categories; track category.categoryId) {
+          <option [ngValue]="category.categoryId">{{ category.name }}</option>
+        }
+      </select>
+      @if (form.controls.categoryId.invalid && form.controls.categoryId.touched) {
+        <span class="field-error">Please choose a category.</span>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="description">Description</label>
+      <textarea id="description" rows="3" formControlName="description"></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="price">Price</label>
+        <input id="price" type="number" step="0.01" formControlName="price" />
+        @if (form.controls.price.invalid && form.controls.price.touched) {
+          <span class="field-error">Price must be zero or more.</span>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="quantity">Quantity</label>
+        <input id="quantity" type="number" formControlName="quantity" />
+        @if (form.controls.quantity.invalid && form.controls.quantity.touched) {
+          <span class="field-error">Quantity must be zero or more.</span>
+        }
+      </div>
+    </div>
+
+    <div class="form-field form-field--checkbox">
+      <label>
+        <input type="checkbox" formControlName="isActive" />
+        Active
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn--ghost" (click)="cancelled.emit()">Cancel</button>
+      <button type="submit" class="btn btn--primary" [disabled]="isSaving">
+        {{ isSaving ? 'Saving…' : 'Save' }}
+      </button>
+    </div>
+  </form>
+}

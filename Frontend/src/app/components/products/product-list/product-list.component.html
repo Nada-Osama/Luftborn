@@ -1,0 +1,73 @@
+<div class="page-header">
+  <h1>Products</h1>
+  <button type="button" class="btn btn--primary" (click)="openCreateModal()">+ New Product</button>
+</div>
+
+<div class="toolbar">
+  <app-search-box placeholder="Search products by name…" (searchChange)="onSearchChange($event)" />
+</div>
+
+@if (isLoading) {
+  <p class="loading-text">Loading products…</p>
+} @else if (products.length === 0) {
+  <p class="empty-state">
+    {{ keyword ? 'No products match "' + keyword + '".' : 'No products yet. Create the first one to get started.' }}
+  </p>
+} @else {
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th class="align-right">Price</th>
+        <th class="align-right">Quantity</th>
+        <th>Status</th>
+        <th class="align-right">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (product of products; track product.productId) {
+        <tr>
+          <td>{{ product.name }}</td>
+          <td>{{ product.categoryName }}</td>
+          <td class="align-right">{{ product.price | currency }}</td>
+          <td class="align-right">{{ product.quantity }}</td>
+          <td>
+            <span class="badge" [class.badge--active]="product.isActive" [class.badge--inactive]="!product.isActive">
+              {{ product.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+          <td class="align-right actions">
+            <button type="button" class="btn btn--ghost" (click)="openEditModal(product)">Edit</button>
+            <button type="button" class="btn btn--danger-outline" (click)="requestDelete(product)">Delete</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  @if (pagedResult) {
+    <app-paginator
+      [currentPage]="pagedResult.currentPage"
+      [pageCount]="pagedResult.pageCount"
+      [rowCount]="pagedResult.rowCount"
+      [pageSize]="pageSize"
+      (pageChange)="onPageChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)"
+    />
+  }
+}
+
+@if (isFormOpen) {
+  <app-modal [title]="editingProductId ? 'Edit Product' : 'New Product'" (closed)="closeModal()">
+    <app-product-form [productId]="editingProductId" (saved)="onSaved()" (cancelled)="closeModal()" />
+  </app-modal>
+}
+
+@if (productPendingDeletion) {
+  <app-confirm-dialog
+    [message]="'Delete ' + productPendingDeletion.name + '? This cannot be undone.'"
+    (confirmed)="confirmDelete()"
+    (cancelled)="cancelDelete()"
+  />
+}

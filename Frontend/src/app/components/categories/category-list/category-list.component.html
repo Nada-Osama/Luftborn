@@ -1,0 +1,63 @@
+<div class="page-header">
+  <h1>Categories</h1>
+  <button type="button" class="btn btn--primary" (click)="openCreateModal()">+ New Category</button>
+</div>
+
+<div class="toolbar">
+  <app-search-box placeholder="Search categories by name…" (searchChange)="onSearchChange($event)" />
+</div>
+
+@if (isLoading) {
+  <p class="loading-text">Loading categories…</p>
+} @else if (categories.length === 0) {
+  <p class="empty-state">
+    {{ keyword ? 'No categories match "' + keyword + '".' : 'No categories yet.' }}
+  </p>
+} @else {
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th class="align-right">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (category of categories; track category.categoryId) {
+        <tr>
+          <td>{{ category.name }}</td>
+          <td>{{ category.description || '—' }}</td>
+          <td class="align-right actions">
+            <button type="button" class="btn btn--ghost" (click)="openEditModal(category)">Edit</button>
+            <button type="button" class="btn btn--danger-outline" (click)="requestDelete(category)">Delete</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  @if (pagedResult) {
+    <app-paginator
+      [currentPage]="pagedResult.currentPage"
+      [pageCount]="pagedResult.pageCount"
+      [rowCount]="pagedResult.rowCount"
+      [pageSize]="pageSize"
+      (pageChange)="onPageChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)"
+    />
+  }
+}
+
+@if (isFormOpen) {
+  <app-modal [title]="editingCategoryId ? 'Edit Category' : 'New Category'" (closed)="closeModal()">
+    <app-category-form [categoryId]="editingCategoryId" (saved)="onSaved()" (cancelled)="closeModal()" />
+  </app-modal>
+}
+
+@if (categoryPendingDeletion) {
+  <app-confirm-dialog
+    [message]="'Delete ' + categoryPendingDeletion.name + '?'"
+    (confirmed)="confirmDelete()"
+    (cancelled)="cancelDelete()"
+  />
+}

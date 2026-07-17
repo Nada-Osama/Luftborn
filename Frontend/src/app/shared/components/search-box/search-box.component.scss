@@ -1,0 +1,13 @@
+.search-box {
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  min-width: 240px;
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+}

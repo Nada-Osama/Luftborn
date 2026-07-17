@@ -1,0 +1,17 @@
+<div class="paginator">
+  <div class="paginator__size">
+    <label for="pageSize">Rows per page</label>
+    <select id="pageSize" [ngModel]="pageSize" (ngModelChange)="onPageSizeChange($event)">
+      @for (size of pageSizeOptions; track size) {
+        <option [ngValue]="size">{{ size }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="paginator__nav">
+    <span class="paginator__count">{{ rowCount }} total</span>
+    <button type="button" class="btn btn--ghost" [disabled]="!hasPreviousPage" (click)="goToPrevious()">‹ Prev</button>
+    <span class="paginator__label">Page {{ currentPage }} of {{ pageCount || 1 }}</span>
+    <button type="button" class="btn btn--ghost" [disabled]="!hasNextPage" (click)="goToNext()">Next ›</button>
+  </div>
+</div>

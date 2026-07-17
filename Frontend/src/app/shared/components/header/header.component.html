@@ -1,0 +1,18 @@
+<header class="app-header">
+  <span class="app-header__title">{{ title }}</span>
+  <nav class="app-header__nav">
+    <a routerLink="/products" routerLinkActive="is-active">Products</a>
+    <a routerLink="/categories" routerLinkActive="is-active">Categories</a>
+  </nav>
+
+  @if (ssoEnabled()) {
+    <div class="app-header__auth">
+      @if (isAuthenticated()) {
+        <span class="app-header__user">{{ currentUser().name }}</span>
+        <button type="button" class="app-header__auth-btn" (click)="signOut()">Sign out</button>
+      } @else {
+        <button type="button" class="app-header__auth-btn" (click)="signIn()">Sign in</button>
+      }
+    </div>
+  }
+</header>

@@ -1,0 +1,9 @@
+<div class="dialog-backdrop">
+  <div class="dialog" role="alertdialog" aria-modal="true">
+    <p class="dialog__message">{{ message }}</p>
+    <div class="dialog__actions">
+      <button type="button" class="btn btn--ghost" (click)="cancelled.emit()">Cancel</button>
+      <button type="button" class="btn btn--danger" (click)="confirmed.emit()">{{ confirmLabel }}</button>
+    </div>
+  </div>
+</div>

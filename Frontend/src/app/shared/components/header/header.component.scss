@@ -1,0 +1,61 @@
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-xl);
+  background: var(--color-primary);
+  color: white;
+  box-shadow: var(--shadow-sm);
+
+  &__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  &__nav {
+    display: flex;
+    gap: var(--space-lg);
+
+    a {
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      font-weight: 500;
+      padding-bottom: var(--space-xs);
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s ease, border-color 0.15s ease;
+
+      &:hover {
+        color: white;
+      }
+
+      &.is-active {
+        color: white;
+        border-bottom-color: var(--color-accent);
+      }
+    }
+  }
+
+  &__auth {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  &__user {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  &__auth-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    border-radius: var(--radius-md);
+    padding: 4px var(--space-md);
+    font-size: 0.85rem;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
